@@ -1,0 +1,15 @@
+OpenAI is an American artificial intelligence research laboratory founded in December 2015 by Sam Altman, Greg Brockman, Ilya Sutskever, Elon Musk, and others. The company is headquartered in San Francisco, California. OpenAI developed the GPT series of language models, including GPT-3, GPT-4, and the ChatGPT product. Microsoft invested heavily in OpenAI, forming a strategic partnership. OpenAI released the DALL-E image generation model and the Codex code generation system. The company operates as a capped-profit organisation controlled by a non-profit board.
+
+Sam Altman serves as the CEO of OpenAI. He previously worked at Y Combinator, the renowned startup accelerator based in Silicon Valley. Greg Brockman is the President of OpenAI and one of its founding members. Ilya Sutskever, a co-founder, served as the Chief Scientist before departing in 2024 to found Safe Superintelligence Inc.
+
+Elon Musk was an early backer of OpenAI but resigned from the board in 2018. He later founded xAI, a competing AI company, and launched Grok, an AI assistant integrated with his social media platform X (formerly Twitter). Tesla, the electric vehicle company founded by Musk, uses AI extensively for its Autopilot and Full Self-Driving features.
+
+Google DeepMind, a subsidiary of Alphabet Inc., is a leading AI research organisation headquartered in London. DeepMind is known for AlphaGo, which defeated world champion Go player Lee Sedol, and AlphaFold, which solved the protein folding problem. Sundar Pichai is the CEO of Alphabet, Google's parent company.
+
+Anthropic was founded in 2021 by Dario Amodei and Daniela Amodei, both former OpenAI researchers. Anthropic is based in San Francisco and developed the Claude AI assistant. The company focuses on AI safety research. Amazon invested over $4 billion in Anthropic, establishing a cloud partnership.
+
+Meta AI is the artificial intelligence research division of Meta Platforms, formerly known as Facebook. Yann LeCun, a Turing Award winner, serves as the Chief AI Scientist at Meta. Meta released the LLaMA series of open-source language models. The LLaMA models are widely used by researchers and developers.
+
+Hugging Face is a machine learning company founded by Clement Delangue, Julien Chaumond, and Thomas Wolf. It is headquartered in New York and provides the Transformers library, which is widely used for NLP tasks. Hugging Face hosts the Model Hub, a repository of thousands of pre-trained models.
+
+NVIDIA Corporation, founded by Jensen Huang, Chris Malachowsky, and Curtis Priem in 1993, is headquartered in Santa Clara, California. NVIDIA manufactures the H100 and A100 GPUs that power most large AI training runs. Jensen Huang is the CEO and co-founder of NVIDIA. Microsoft Azure, Amazon Web Services, and Google Cloud Platform all use NVIDIA GPUs in their data centres.
