@@ -83,9 +83,9 @@ def render_graph_html(graph_store: GraphStore, height: int = 500) -> str:
             # Gradient from steel blue (low) to orange-red (high)
             ratio = deg / max_deg
             r = int(30 + ratio * 225)
-            g_c = int(144 - ratio * 100)
+            green = int(144 - ratio * 100)
             b = int(255 - ratio * 200)
-            node["color"] = f"rgb({r},{g_c},{b})"
+            node["color"] = f"rgb({r},{green},{b})"
             node["title"] = node["id"]
             node["size"] = 10 + deg * 2
 

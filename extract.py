@@ -62,7 +62,8 @@ def _get_nlp():
             logger.warning(
                 "spaCy model '%s' not found. Downloading...", config.SPACY_MODEL
             )
-            import subprocess, sys
+            import subprocess
+            import sys
             subprocess.run(
                 [sys.executable, "-m", "spacy", "download", config.SPACY_MODEL],
                 check=True,

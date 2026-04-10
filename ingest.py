@@ -48,7 +48,10 @@ def _load_txt(path: Path) -> str:
 
 def _load_md(path: Path) -> str:
     text = path.read_text(encoding="utf-8", errors="replace")
-    # Strip markdown syntax for cleaner NLP processing
+    # Strip common markdown syntax for cleaner NLP processing.
+    # Note: handles standard markdown patterns; complex/nested or non-standard
+    # markdown may not be fully stripped. For production use, consider replacing
+    # this with a dedicated markdown parser (e.g. `markdown` or `mistletoe`).
     text = re.sub(r"#{1,6}\s*", "", text)        # headings
     text = re.sub(r"\*{1,2}(.+?)\*{1,2}", r"\1", text)  # bold/italic
     text = re.sub(r"`{1,3}[^`]*`{1,3}", " ", text, flags=re.S)  # code
