@@ -15,6 +15,7 @@ Usage:
 
 from __future__ import annotations
 
+import hashlib
 import pickle
 from pathlib import Path
 from typing import List, Optional
@@ -202,13 +203,26 @@ class GraphStore:
     def save(self) -> None:
         self._persist_path.parent.mkdir(parents=True, exist_ok=True)
         with open(self._persist_path, "wb") as f:
-            pickle.dump(self._graph, f)
+            data = pickle.dumps(self._graph)
+            checksum = hashlib.sha256(data).hexdigest()
+            f.write(data)
+        checksum_path = self._persist_path.with_suffix(".sha256")
+        checksum_path.write_text(checksum, encoding="utf-8")
         logger.info("Graph saved to %s", self._persist_path)
 
     def load(self) -> None:
         try:
-            with open(self._persist_path, "rb") as f:
-                self._graph = pickle.load(f)
+            data = self._persist_path.read_bytes()
+            checksum_path = self._persist_path.with_suffix(".sha256")
+            if checksum_path.exists():
+                expected = checksum_path.read_text(encoding="utf-8").strip()
+                actual = hashlib.sha256(data).hexdigest()
+                if actual != expected:
+                    raise ValueError(
+                        f"Graph file checksum mismatch — file may be corrupted or tampered. "
+                        f"Expected {expected}, got {actual}."
+                    )
+            self._graph = pickle.loads(data)  # noqa: S301
         except Exception as exc:
             logger.error("Failed to load graph: %s — starting fresh.", exc)
             import networkx as nx
@@ -219,4 +233,7 @@ class GraphStore:
         self._graph = nx.MultiDiGraph()
         if self._persist_path.exists():
             self._persist_path.unlink()
+        checksum_path = self._persist_path.with_suffix(".sha256")
+        if checksum_path.exists():
+            checksum_path.unlink()
         logger.info("Graph cleared.")

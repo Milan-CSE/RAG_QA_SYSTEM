@@ -6,7 +6,6 @@ Run with:  python -m pytest tests/ -v
 
 import os
 import sys
-import tempfile
 import pytest
 
 # Ensure project root is on path

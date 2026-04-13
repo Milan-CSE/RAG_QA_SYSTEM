@@ -15,7 +15,7 @@ from __future__ import annotations
 import itertools
 import re
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 
 import config
 from utils import get_logger
@@ -148,15 +148,18 @@ def _extract_relations_llm(text: str, entities: List[dict]) -> List[dict]:
 # ─── Relation extraction – heuristic fallback ────────────────────────────────
 
 # Patterns: (regex on sentence, relation label)
+# _ENTITY captures 1–5 words (lazy), anchored at sentence-end punctuation to
+# prevent greedily swallowing entire clauses as a single entity name.
+_ENTITY = r"\w(?:\w|\s(?=\w)){0,39}?"
 _PATTERNS = [
-    (re.compile(r"\b(\w[\w\s]+)\s+(?:is|was|are|were)\s+(?:the\s+)?(?:ceo|founder|director|president|author|creator|head)\s+of\s+(\w[\w\s]+)", re.I), "is_head_of"),
-    (re.compile(r"\b(\w[\w\s]+)\s+(?:founded|created|established|launched|started)\s+(\w[\w\s]+)", re.I), "founded"),
-    (re.compile(r"\b(\w[\w\s]+)\s+(?:acquired|purchased|bought)\s+(\w[\w\s]+)", re.I), "acquired"),
-    (re.compile(r"\b(\w[\w\s]+)\s+(?:works?\s+(?:at|for)|is\s+employed\s+(?:at|by))\s+(\w[\w\s]+)", re.I), "works_at"),
-    (re.compile(r"\b(\w[\w\s]+)\s+(?:is\s+located\s+in|is\s+based\s+in|headquartered\s+in)\s+(\w[\w\s]+)", re.I), "located_in"),
-    (re.compile(r"\b(\w[\w\s]+)\s+(?:is\s+a\s+(?:subsidiary|division|branch|part)\s+of)\s+(\w[\w\s]+)", re.I), "subsidiary_of"),
-    (re.compile(r"\b(\w[\w\s]+)\s+(?:partnered\s+with|collaborated\s+with|worked\s+with)\s+(\w[\w\s]+)", re.I), "partnered_with"),
-    (re.compile(r"\b(\w[\w\s]+)\s+(?:invented|developed|designed|built|wrote)\s+(\w[\w\s]+)", re.I), "created"),
+    (re.compile(rf"\b({_ENTITY})\s+(?:is|was|are|were)\s+(?:the\s+)?(?:ceo|founder|director|president|author|creator|head)\s+of\s+({_ENTITY})(?=\s*[.,;!?]|$)", re.I), "is_head_of"),
+    (re.compile(rf"\b({_ENTITY})\s+(?:founded|created|established|launched|started)\s+({_ENTITY})(?=\s*[.,;!?]|$)", re.I), "founded"),
+    (re.compile(rf"\b({_ENTITY})\s+(?:acquired|purchased|bought)\s+({_ENTITY})(?=\s*[.,;!?]|$)", re.I), "acquired"),
+    (re.compile(rf"\b({_ENTITY})\s+(?:works?\s+(?:at|for)|is\s+employed\s+(?:at|by))\s+({_ENTITY})(?=\s*[.,;!?]|$)", re.I), "works_at"),
+    (re.compile(rf"\b({_ENTITY})\s+(?:is\s+located\s+in|is\s+based\s+in|headquartered\s+in)\s+({_ENTITY})(?=\s*[.,;!?]|$)", re.I), "located_in"),
+    (re.compile(rf"\b({_ENTITY})\s+(?:is\s+a\s+(?:subsidiary|division|branch|part)\s+of)\s+({_ENTITY})(?=\s*[.,;!?]|$)", re.I), "subsidiary_of"),
+    (re.compile(rf"\b({_ENTITY})\s+(?:partnered\s+with|collaborated\s+with|worked\s+with)\s+({_ENTITY})(?=\s*[.,;!?]|$)", re.I), "partnered_with"),
+    (re.compile(rf"\b({_ENTITY})\s+(?:invented|developed|designed|built|wrote)\s+({_ENTITY})(?=\s*[.,;!?]|$)", re.I), "created"),
 ]
 
 

@@ -8,7 +8,7 @@ a grounded answer. Falls back to a context-only answer if no LLM key is set.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 
 import config
 from utils import get_logger, truncate
@@ -97,8 +97,9 @@ def _fallback_answer(query: str, context: str) -> str:
     """No-LLM fallback: returns the raw context with a note."""
     if context == "No supporting evidence found.":
         return (
-            "⚠️ No relevant information was found in the indexed documents "
-            "for your query. Please index documents first or rephrase the question."
+            f"⚠️ No relevant information was found in the indexed documents "
+            f"for your query: \"{query}\". "
+            "Please index documents first or rephrase the question."
         )
     return (
         "ℹ️ **Note:** No OpenAI API key configured — showing raw retrieved context.\n\n"

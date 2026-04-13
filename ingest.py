@@ -120,7 +120,7 @@ def _chunk_text(
 
 
 def _make_chunk_id(source_file: str, index: int, text: str) -> str:
-    key = f"{source_file}:{index}:{text[:50]}"
+    key = f"{source_file}:{index}:{text}"
     return hashlib.md5(key.encode()).hexdigest()
 
 
