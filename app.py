@@ -56,7 +56,6 @@ def render_graph_html(graph_store: GraphStore, height: int = 500) -> str:
     """Build a PyVis network HTML string from the knowledge graph."""
     try:
         from pyvis.network import Network  # type: ignore
-        import networkx as nx  # type: ignore
 
         G = graph_store.get_graph()
         if G.number_of_nodes() == 0:
